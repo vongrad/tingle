@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Tingle</string>
+    <string name="lbl_last_added">Last Added</string>
+    <string name="lbl_what">What thing</string>
+    <string name="lbl_where">Where</string>
+    <string name="btn_new">Add new thing</string>
+    <string name="btn_list">List things</string>
+</resources>
