@@ -1,17 +1,17 @@
 package dk.itk.vongrad.tingle;
 
+import android.content.DialogInterface;
 import android.support.v4.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import dk.itk.vongrad.tingle.adapters.ThingsAdapter;
 import dk.itk.vongrad.tingle.database.ThingsDB;
-import dk.itk.vongrad.tingle.models.Thing;
 
 /**
  * A fragment representing a list of Items.
@@ -48,11 +48,21 @@ public class TingleListFragment extends ListFragment {
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        ThingsAdapter adapter = (ThingsAdapter) l.getAdapter();
+    public void onListItemClick(ListView l, View v, final int position, long id) {
 
-        Thing thing = (Thing) adapter.getItem(position);
-        Toast.makeText(getContext(), thing.toString(), Toast.LENGTH_SHORT).show();
+        final ThingsAdapter adapter = (ThingsAdapter) l.getAdapter();
+
+        new AlertDialog.Builder(getContext())
+                .setTitle(R.string.dialog_delete_thing)
+                .setMessage(R.string.dialog_delete_thing_desc)
+                .setIcon(android.R.drawable.ic_delete)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        db.delete(position);
+                        adapter.notifyDataSetChanged();
+                    }})
+                .setNegativeButton(android.R.string.no, null).show();
     }
 
     @Override
@@ -77,5 +87,5 @@ public class TingleListFragment extends ListFragment {
         ((ThingsAdapter) getListAdapter()).notifyDataSetChanged();
     }
 
-    public interface OnListFragmentInteractionListener { }
+    public interface OnListFragmentInteractionListener {}
 }

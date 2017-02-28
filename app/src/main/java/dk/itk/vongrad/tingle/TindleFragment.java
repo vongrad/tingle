@@ -2,7 +2,6 @@ package dk.itk.vongrad.tingle;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -73,13 +72,8 @@ public class TindleFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(edt_what.getText().length() > 0 && edt_where.getText().length() > 0){
-
                     Thing thing = new Thing(edt_what.getText().toString(), edt_where.getText().toString());
-
-                    db.add(thing);
-
-                    updateUI();
-                    addNewThing();
+                    addNewThing(thing);
                 }
             }
         });
@@ -99,8 +93,16 @@ public class TindleFragment extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void addNewThing() {
+    public void clearInputs(){
+        edt_what.setText("");
+        edt_where.setText("");
+    }
+
+    public void addNewThing(Thing thing) {
+        db.add(thing);
+        updateUI();
+        clearInputs();
+
         if (mListener != null) {
             mListener.onNewThingAdded();
         }

@@ -13,7 +13,7 @@ public class ThingsDB {
 
     private List<Thing> things;
 
-    public static ThingsDB getInstance(Context context) {
+    public static synchronized ThingsDB getInstance(Context context) {
         if (instance == null) {
             instance = new ThingsDB(context);
         }
@@ -34,6 +34,10 @@ public class ThingsDB {
 
     public Thing get(int i){
         return things.get(i);
+    }
+
+    public void delete(int index) {
+        things.remove(index);
     }
 
     private ThingsDB(Context context) {
